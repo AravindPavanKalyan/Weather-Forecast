@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <form class="parent-form">
+      <fieldset class="border p-4 m-4">
+        <legend class="float-none w-auto p-2">
+          {{ response.city.name }} ( {{ zipCode }} )
+        </legend>
+        <ng-container *ngFor="let data of dataList">
+          <div class="row mr-4 ml-4">
+            <div class="col-md-10">
+              {{ getDate(data.dt_txt) }}:
+              {{
+                data["weather"][0].main === "Clear"
+                  ? "Sunny"
+                  : data["weather"][0].main === "Clouds"
+                  ? "Cloudy"
+                  : data["weather"][0].main === "Rain"
+                  ? "Rainy"
+                  : "Snowfall"
+              }}
+              - High: {{ data.main.temp_max }} - Low: {{ data.main.temp_min }}
+            </div>
+            <div class="col">
+              <img
+                width="50px"
+                src="https://www.angulartraining.com/images/weather/{{
+                  data['weather'][0].main === 'Clear'
+                    ? 'sun.png'
+                    : data['weather'][0].main === 'Clouds'
+                    ? 'clouds.png'
+                    : data['weather'][0].main === 'Rain'
+                    ? 'rain.png'
+                    : 'snow.png'
+                }}"
+              />
+            </div>
+          </div>
+        </ng-container>
+      </fieldset>
+      <button class="btn btn-outline-primary back-btn" (click)="backToHome()">
+        Back
+      </button>
+    </form>
+  </div>
+</div>

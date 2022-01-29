@@ -1,0 +1,91 @@
+<div class="row mt-4">
+  <div class="col-md-10 offset-md-1">
+    <form [formGroup]="zipCodeForm" (ngSubmit)="handleSubmit()">
+      <fieldset class="border p-4">
+        <legend class="float-none w-auto p-2">Add a location</legend>
+        <div class="row">
+          <div class="col">
+            <h4>Enter a zipcode:</h4>
+            <div class="row mt-4">
+              <div class="col-md-3 offset-md-4">
+                <input
+                  id="zipCode"
+                  type="text"
+                  class="form-control"
+                  formControlName="zipCode"
+                  placeholder="Plese Enter zipcode"
+                />
+                <span
+                  class="text-danger mt-2 ml-2"
+                  *ngIf="
+                    isSumbitted && zf && zf.errors && zf['errors']['required']
+                  "
+                >
+                  Zipcode required.
+                </span>
+                <span
+                  class="text-danger mt-2 ml-2"
+                  *ngIf="
+                    isSumbitted &&
+                    zf &&
+                    zf.errors &&
+                    !zf['errors']['required'] &&
+                    zf['errors']['numberOnly']
+                  "
+                >
+                  Please enter a Valid Zipcode.
+                </span>
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-outline-primary">
+                  Add location
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+
+    <ng-container *ngFor="let zip of zipList; let i = index">
+      <form class="parent-form mt-4">
+        <fieldset class="border p-4">
+          <legend
+            class="float-none w-auto p-2 cursor-pointer"
+            (click)="routeToForecast(zip.zip)"
+          >
+            {{ zip.name }}
+          </legend>
+          <div class="row mt-0 mr-4">
+            <div class="col pt-4">
+              <p>Current conditions: {{ zip.main }}</p>
+              <p class="mt-4 pt-4">Tempareture: {{ zip.temp }}</p>
+              <p class="mt-4 pt-4">
+                Max today: {{ zip.temp_max }} - Min today: {{ zip.temp_min }}
+              </p>
+            </div>
+            <div class="col-md-4">
+              <img
+                src="https://www.angulartraining.com/images/weather/{{
+                  zip.main === 'Clear'
+                    ? 'sun.png'
+                    : zip.main === 'Clouds'
+                    ? 'clouds.png'
+                    : zip.main === 'Rain'
+                    ? 'rain.png'
+                    : 'snow.png'
+                }}"
+              />
+            </div>
+          </div>
+        </fieldset>
+        <i
+          class="fa fa-close child-form"
+          title="Remove Location"
+          (click)="deleteZip(i)"
+        >
+        </i>
+      </form>
+    </ng-container>
+  </div>
+</div>
