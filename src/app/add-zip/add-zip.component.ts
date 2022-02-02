@@ -84,10 +84,10 @@ export class AddZipComponent {
       zips.splice(index, 1);
       localStorage.setItem("zips", JSON.stringify(zips));
       this.zipList = zips;
+      this.toastr.success("Location Removed Successfully", "", {
+        timeOut: 1000,
+      });
     }
-    this.toastr.success("Location Removed Successfully", "", {
-      timeOut: 1000,
-    });
   }
 
   routeToForecast(zip: number) {
